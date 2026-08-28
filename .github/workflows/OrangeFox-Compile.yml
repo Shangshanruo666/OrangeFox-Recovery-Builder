@@ -38,6 +38,11 @@ on:
         description: '指定设备代号'
         required: true
         default: 'earth'
+      LUNCH_PREFIX:
+        description: 'Lunch 前缀（产品名前缀，如 omni_、twrp_、orangefox_）'
+        required: true
+        default: 'omni_'
+        type: string
       BUILD_TARGET:
         description: '构建目标'
         required: true
@@ -112,7 +117,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         set -e
-        lunch twrp_${{ inputs.DEVICE_NAME }}-eng && mka ${{ inputs.BUILD_TARGET }}image
+        lunch ${{ inputs.LUNCH_PREFIX }}${{ inputs.DEVICE_NAME }}-eng && mka ${{ inputs.BUILD_TARGET }}image
 
     - name: 💿 整理镜像
       run: |
